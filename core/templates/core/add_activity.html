@@ -1,0 +1,12 @@
+<h2>Yeni Aktivite Ekle</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Tarih:</label>
+    <input type="date" name="activity_date" required><br><br>
+
+    <label>Açıklama:</label>
+    <input type="text" name="description" required><br><br>
+
+    <button type="submit">Kaydet</button>
+</form>
+<a href="{% url 'my_activities' %}">Aktivitelerime Dön</a>

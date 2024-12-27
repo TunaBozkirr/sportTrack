@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gruplar</title>
+  <!-- Bootstrap CSS (CDN) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  >
+  <style>
+    body {
+      background-color: #f7f7f7;
+    }
+    .card {
+      margin-top: 20px;
+    }
+    .card-header h5 {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container mt-4">
+    <h1 class="mb-4">Gruplar</h1>
+
+    <!-- Kullanıcının kendi grupları -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Benim Gruplarım</h5>
+          </div>
+          <div class="card-body">
+            {% if my_groups %}
+              <ul class="list-group list-group-flush">
+                {% for g in my_groups %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{ g.name }}</span>
+                    <div>
+                      <a href="{% url 'group_detail' g.id %}" class="btn btn-sm btn-outline-info me-2">
+                        Detaylara Git
+                      </a>
+                      <a href="{% url 'leave_group' g.id %}" class="btn btn-sm btn-outline-danger">
+                        Ayrıl
+                      </a>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted">Henüz hiç gruba üye değilsiniz.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tüm gruplar listesi -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Tüm Gruplar</h5>
+          </div>
+          <div class="card-body">
+            {% if all_groups %}
+              <ul class="list-group list-group-flush">
+                {% for g in all_groups %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{ g.name }}</span>
+                    <div>
+                      <!-- Üyelik durumu -->
+                      {% if not g.is_member %}
+                        <a href="{% url 'join_group' g.id %}" class="btn btn-sm btn-outline-primary">
+                          Katıl
+                        </a>
+                      {% endif %}
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted">Hiç grup yok.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aksiyon Linkleri -->
+    <div class="row mt-4">
+      <div class="col-md-12 d-flex justify-content-between">
+        <a href="{% url 'create_group' %}" class="btn btn-primary">Yeni Grup Oluştur</a>
+        <a href="/" class="btn btn-outline-secondary">Ana Sayfa</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap JS (CDN) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+  </script>
+</body>
+</html>

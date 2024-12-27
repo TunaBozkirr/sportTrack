@@ -1,0 +1,7 @@
+<h2>Aktivitelerim</h2>
+<ul>
+{% for act in activities %}
+  <li>{{ act.date }} - {{ act.description }}</li>
+{% endfor %}
+</ul>
+<a href="{% url 'add_activity' %}">Yeni Aktivite Ekle</a>
