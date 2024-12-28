@@ -30,7 +30,9 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 # Hosts allowed to connect to the project
 ALLOWED_HOSTS = ['.railway.app', 'sporttrack.pro', 'sporttrack.railway.internal', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://sporttrack.railway.internal', 'https://sporttrack.pro']
+
+CSRF_TRUSTED_ORIGINS = ['https://sporttrack.pro', 'https://*.railway.app']
+
 
 # Application definition
 
