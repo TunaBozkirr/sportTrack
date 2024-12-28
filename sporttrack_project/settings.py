@@ -28,7 +28,8 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 
 # Hosts allowed to connect to the project
-ALLOWED_HOSTS = ['.railway.app','http://127.0.0.1:8000/', 'localhost']
+ALLOWED_HOSTS = ['.railway.app', 'sporttrack.pro', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
