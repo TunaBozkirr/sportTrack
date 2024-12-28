@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ group.name }} - Detaylar</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f7f7f7;
+    }
+
+    h1 {
+      color: #343a40; /* Daha koyu başlık */
+    }
+
+    .card {
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .table {
+      margin-top: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .table th {
+      background-color: #007bff; /* Mavi arka plan */
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .table tbody tr:nth-child(odd) {
+      background-color: #f9f9f9; /* Hafif gri */
+    }
+
+    .table tbody tr:nth-child(even) {
+      background-color: #ffffff; /* Beyaz */
+    }
+
+    .no-activity {
+      color: #aaa; /* Soluk gri */
+      font-size: 1.3rem;
+      text-align: center;
+    }
+
+    .activity-done {
+      background-color: #d4edda; /* Açık yeşil arka plan */
+      color: green; /* Tik işareti rengi */
+      font-size: 1.3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .activity-duration {
+      background-color: #f1f1f1;
+      color: #555;
+      font-size: 0.8rem;
+      padding: 2px 6px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      opacity: 0.8;
+    }
+
+    .btn-outline-secondary {
+      color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-outline-secondary:hover {
+      background-color: #007bff;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <h1 class="mb-4 text-center">Grup: {{ group.name }}</h1>
+
+    <!-- Haftalık Aktiviteler -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header bg-primary text-white text-center">
+            Haftalık Aktiviteler
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th> <!-- Rank Kolonu -->
+                  <th>Kullanıcı</th>
+                  {% for day in week_days %}
+                    <th>{{ day|date:"D, d M" }}</th>
+                  {% endfor %}
+                  <th>Toplam</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user_data in user_activities %}
+                  <tr>
+                    <td class="text-center">{{ user_data.rank }}</td> <!-- Rank Gösterimi -->
+                    <td class="fw-bold">{{ user_data.user.username }}</td>
+                    {% for day_data in user_data.daily_activities %}
+                      <td class="{% if day_data.duration > 0 %}activity-done{% else %}no-activity{% endif %}">
+                        {% if day_data.duration > 0 %}
+                          ✔️
+                          <span class="activity-duration">{{ day_data.duration }} dk</span>
+                        {% else %}
+                          -
+                        {% endif %}
+                      </td>
+                    {% endfor %}
+                    <td class="text-center fw-bold">{{ user_data.weekly_total_duration }} dk</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Geri Dönüş Linki -->
+    <div class="row mt-4">
+      <div class="col-md-12 text-center">
+        <a href="{% url 'list_groups' %}" class="btn btn-outline-secondary">Gruplar Sayfasına Dön</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
